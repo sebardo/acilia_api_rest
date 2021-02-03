@@ -2,7 +2,12 @@
 
 namespace App\Form\Type;
 
-
+/**
+ * Class CurrencyTypeEnum
+ * @package App\Form\Type
+ *
+ * A custom type for enum values on currency param in Product entity
+ */
 abstract class CurrencyTypeEnum
 {
     const CURRENCY_USD    = "USD";

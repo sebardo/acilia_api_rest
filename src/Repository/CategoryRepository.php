@@ -15,12 +15,16 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry,EntityManagerInterface $manager)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Category::class);
         $this->manager = $manager;
     }
 
+    /**
+     * @param $name
+     * @param $description
+     */
     public function saveCategory($name, $description)
     {
         $newCategory = new Category();
@@ -33,6 +37,10 @@ class CategoryRepository extends ServiceEntityRepository
         $this->manager->flush();
     }
 
+    /**
+     * @param Category $category
+     * @return Category
+     */
     public function updateCategory(Category $category): Category
     {
         $this->manager->persist($category);
@@ -41,11 +49,12 @@ class CategoryRepository extends ServiceEntityRepository
         return $category;
     }
 
-
+    /**
+     * @param Category $category
+     */
     public function removeCategory(Category $category)
     {
         $this->manager->remove($category);
         $this->manager->flush();
     }
-
 }

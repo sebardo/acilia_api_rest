@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 
 /**
@@ -21,7 +20,6 @@ use OpenApi\Annotations as OA;
  */
 class ProductController
 {
-
     private $productRepository;
     private $categoryRepository;
 
@@ -175,7 +173,7 @@ class ProductController
 
             $currency = null;
             //Just if currency filter is setted and product have a diferent currency convert do proccess convertion
-            if(isset($data['currency']) &&  ($product->getCurrency() != $data['currency'])){
+            if (isset($data['currency']) &&  ($product->getCurrency() != $data['currency'])) {
                 $item['price'] = $conversor->convertProductPrice($product, $data['currency']);
                 $item['currency'] = $data['currency'];
             }

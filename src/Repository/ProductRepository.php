@@ -16,12 +16,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry,EntityManagerInterface $manager)
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $manager)
     {
         parent::__construct($registry, Product::class);
         $this->manager = $manager;
     }
 
+    /**
+     * @param $name
+     * @param $price
+     * @param $category
+     * @param $currency
+     * @param $featured
+     */
     public function saveProduct($name, $price, $category, $currency, $featured)
     {
         $newProduct= new Product();
@@ -37,6 +44,10 @@ class ProductRepository extends ServiceEntityRepository
         $this->manager->flush();
     }
 
+    /**
+     * @param Product $product
+     * @return Product
+     */
     public function updateProduct(Product $product): Product
     {
         $this->manager->persist($product);
@@ -45,39 +56,12 @@ class ProductRepository extends ServiceEntityRepository
         return $product;
     }
 
+    /**
+     * @param Product $product
+     */
     public function removeProduct(Product $product)
     {
         $this->manager->remove($product);
         $this->manager->flush();
     }
-
-
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Product
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

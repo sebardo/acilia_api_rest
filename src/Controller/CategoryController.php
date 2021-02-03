@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
 
 /**
@@ -19,7 +18,6 @@ use OpenApi\Annotations as OA;
  */
 class CategoryController
 {
-
     private $categoryRepository;
 
     public function __construct(CategoryRepository $categoryRepository)
@@ -142,6 +140,4 @@ class CategoryController
 
         return new JsonResponse(['status' => 'Category deleted'], Response::HTTP_OK);
     }
-
-
 }

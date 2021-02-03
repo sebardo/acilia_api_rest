@@ -1,11 +1,18 @@
 <?php
 
 namespace App\Service;
+
 use App\Entity\Product;
 use App\Form\Type\CurrencyTypeEnum;
 use App\Repository\CountryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * Class ConversorManager
+ * @package App\Service
+ *
+ * Serice used to convert currency
+ */
 class ConversorManager
 {
     private $manager;
@@ -34,14 +41,14 @@ class ConversorManager
     {
         //validate currency base
         $availableCurrencies = CurrencyTypeEnum::getAvailableTypes();
-        if(!in_array($currencyToConvert, $availableCurrencies)){
+        if (!in_array($currencyToConvert, $availableCurrencies)) {
             throw new \InvalidArgumentException("Invalid currency");
         }
 
         //get exchange rates and validate third party service return valid information
         $exchange = $this->getExchange($product->getCurrency(), $currencyToConvert);
 
-        if(!isset($exchange['rates'][$currencyToConvert])){
+        if (!isset($exchange['rates'][$currencyToConvert])) {
             throw new \Exception("No currency rates founded");
         }
 

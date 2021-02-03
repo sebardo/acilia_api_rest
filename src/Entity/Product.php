@@ -50,16 +50,26 @@ class Product
         $this->featured = false;
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -67,11 +77,18 @@ class Product
         return $this;
     }
 
+    /**
+     * @return Category|null
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+    /**
+     * @param Category|null $category
+     * @return $this
+     */
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
@@ -79,11 +96,18 @@ class Product
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPrice(): ?string
     {
         return $this->price;
     }
 
+    /**
+     * @param string $price
+     * @return $this
+     */
     public function setPrice(string $price): self
     {
         $this->price = $price;
@@ -91,11 +115,18 @@ class Product
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
+    /**
+     * @param string|null $currency
+     * @return $this
+     */
     public function setCurrency(?string $currency): self
     {
         if (!in_array($currency, CurrencyTypeEnum::getAvailableTypes())) {
@@ -107,11 +138,18 @@ class Product
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getFeatured(): ?bool
     {
         return $this->featured;
     }
 
+    /**
+     * @param bool $featured
+     * @return $this
+     */
     public function setFeatured(bool $featured): self
     {
         $this->featured = $featured;
