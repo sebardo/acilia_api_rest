@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 
 /**
  * Class ProductController
@@ -30,7 +32,19 @@ class ProductController
     }
 
     /**
+     * Add product
+     *
+     * This call add a new product with mandatory params like : name, price and currency (EUR, USD).
+     *
      * @Route("product", name="add_product", methods={"POST"})
+     * @OA\RequestBody(
+     *     request="name",
+     *     description="Json request",
+     *     required=true,
+     *     @OA\JsonContent(
+     *         type="string",
+     *     )
+     * )
      */
     public function add(Request $request): JsonResponse
     {
@@ -52,6 +66,10 @@ class ProductController
     }
 
     /**
+     * Get a product detail
+     *
+     * This call return a product detail.
+     *
      * @Route("product/{id}", name="get_one_product", methods={"GET"}, requirements={ "id" = "^(?!featured).+" })
      */
     public function get($id): JsonResponse
@@ -71,6 +89,10 @@ class ProductController
     }
 
     /**
+     * List all products
+     *
+     * This call return all products.
+     *
      * @Route("products", name="get_all_products", methods={"GET"})
      */
     public function getAll(): JsonResponse
@@ -93,6 +115,10 @@ class ProductController
     }
 
     /**
+     * Update a category
+     *
+     * This call modify a product data.
+     *
      * @Route("product/{id}", name="update_product", methods={"PUT"})
      */
     public function update($id, Request $request): JsonResponse
@@ -112,6 +138,8 @@ class ProductController
     }
 
     /**
+     * Delete a product
+     *
      * @Route("product/{id}", name="delete_product", methods={"DELETE"})
      */
     public function delete($id): JsonResponse
@@ -124,6 +152,10 @@ class ProductController
     }
 
     /**
+     * List all featured products
+     *
+     * This call return a list of featured products.
+     *
      * @Route("product/featured", name="featured_products", methods={"GET"})
      */
     public function featured(Request $request, ConversorManager $conversor): JsonResponse

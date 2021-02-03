@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 
 /**
  * Class CategoryController
@@ -26,7 +28,19 @@ class CategoryController
     }
 
     /**
+     * Add category
+     *
+     * This call add a new category with mandatory params like : name and description.
+     *
      * @Route("category", name="add_category", methods={"POST"})
+     * @OA\RequestBody(
+     *     request="name",
+     *     description="Json request",
+     *     required=true,
+     *     @OA\JsonContent(
+     *         type="string",
+     *     )
+     * )
      */
     public function add(Request $request): JsonResponse
     {
@@ -45,6 +59,10 @@ class CategoryController
     }
 
     /**
+     * Get a category detail
+     *
+     * This call return a category detail.
+     *
      * @Route("category/{id}", name="get_one_category", methods={"GET"})
      */
     public function get($id): JsonResponse
@@ -61,6 +79,10 @@ class CategoryController
     }
 
     /**
+     * List all categories
+     *
+     * This call return all categories.
+     *
      * @Route("categories", name="get_all_categories", methods={"GET"})
      */
     public function getAll(): JsonResponse
@@ -80,7 +102,19 @@ class CategoryController
     }
 
     /**
+     * Update a category
+     *
+     * This call modify a category data.
+     *
      * @Route("category/{id}", name="update_category", methods={"PUT"})
+     * @OA\RequestBody(
+     *     request="name",
+     *     description="Json request",
+     *     required=true,
+     *     @OA\JsonContent(
+     *         type="string",
+     *     )
+     * )
      */
     public function update($id, Request $request): JsonResponse
     {
@@ -96,6 +130,8 @@ class CategoryController
     }
 
     /**
+     * Delete a category
+     *
      * @Route("category/{id}", name="delete_category", methods={"DELETE"})
      */
     public function delete($id): JsonResponse
