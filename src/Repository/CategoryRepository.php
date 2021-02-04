@@ -35,6 +35,8 @@ class CategoryRepository extends ServiceEntityRepository
 
         $this->manager->persist($newCategory);
         $this->manager->flush();
+
+        return $newCategory;
     }
 
     /**

@@ -32,7 +32,6 @@ class CategoryController
      *
      * @Route("category", name="add_category", methods={"POST"})
      * @OA\RequestBody(
-     *     request="name",
      *     description="Json request",
      *     required=true,
      *     @OA\JsonContent(
@@ -45,15 +44,15 @@ class CategoryController
         $data = json_decode($request->getContent(), true);
 
         $name = $data['name'];
-        $description = $data['description'];
+        $description = (isset($data['description'])) ? $data['description'] : null;
 
-        if (empty($name) || empty($description)) {
+        if (empty($name)) {
             throw new NotFoundHttpException('Expecting mandatory parameters!');
         }
 
-        $this->categoryRepository->saveCategory($name, $description);
+        $category = $this->categoryRepository->saveCategory($name, $description);
 
-        return new JsonResponse(['status' => 'Category created!'], Response::HTTP_CREATED);
+        return new JsonResponse(['status' => 'success', 'message' => 'Category created!', 'id' => $category->getId()], Response::HTTP_CREATED);
     }
 
     /**
@@ -72,29 +71,6 @@ class CategoryController
             'name' => $category->getName(),
             'description' => $category->getDescription(),
         ];
-
-        return new JsonResponse($data, Response::HTTP_OK);
-    }
-
-    /**
-     * List all categories
-     *
-     * This call return all categories.
-     *
-     * @Route("categories", name="get_all_categories", methods={"GET"})
-     */
-    public function getAll(): JsonResponse
-    {
-        $categories = $this->categoryRepository->findAll();
-        $data = [];
-
-        foreach ($categories as $category) {
-            $data[] = [
-                'id' => $category->getId(),
-                'name' => $category->getName(),
-                'description' => $category->getDescription(),
-            ];
-        }
 
         return new JsonResponse($data, Response::HTTP_OK);
     }
@@ -124,7 +100,7 @@ class CategoryController
 
         $updatedCategory = $this->categoryRepository->updateCategory($category);
 
-        return new JsonResponse(['status' => 'Category updated!'], Response::HTTP_OK);
+        return new JsonResponse(['status' => 'success', 'message' => 'Category updated!', 'id' => $updatedCategory->getId()], Response::HTTP_OK);
     }
 
     /**
@@ -138,6 +114,30 @@ class CategoryController
 
         $this->categoryRepository->removeCategory($category);
 
-        return new JsonResponse(['status' => 'Category deleted'], Response::HTTP_OK);
+        return new JsonResponse(['status' => 'success', 'message' => 'Category deleted!'], Response::HTTP_OK);
     }
+
+    /**
+     * List all categories
+     *
+     * This call return all categories.
+     *
+     * @Route("categories", name="get_all_categories", methods={"GET"})
+     */
+    public function getAll(): JsonResponse
+    {
+        $categories = $this->categoryRepository->findAll();
+        $data = [];
+
+        foreach ($categories as $category) {
+            $data[] = [
+                'id' => $category->getId(),
+                'name' => $category->getName(),
+                'description' => $category->getDescription(),
+            ];
+        }
+
+        return new JsonResponse($data, Response::HTTP_OK);
+    }
+
 }

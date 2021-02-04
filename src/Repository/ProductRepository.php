@@ -42,6 +42,8 @@ class ProductRepository extends ServiceEntityRepository
 
         $this->manager->persist($newProduct);
         $this->manager->flush();
+
+        return $newProduct;
     }
 
     /**

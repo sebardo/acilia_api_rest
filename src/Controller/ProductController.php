@@ -58,9 +58,9 @@ class ProductController
             throw new NotFoundHttpException('Expecting mandatory parameters!');
         }
 
-        $this->productRepository->saveProduct($name, $price, $cateogry, $currency, $featured);
+        $product = $this->productRepository->saveProduct($name, $price, $cateogry, $currency, $featured);
 
-        return new JsonResponse(['status' => 'Product created!'], Response::HTTP_CREATED);
+        return new JsonResponse(['status' => 'success', 'message' => 'Product created!', 'id' => $product->getId()], Response::HTTP_CREATED);
     }
 
     /**
@@ -87,32 +87,6 @@ class ProductController
     }
 
     /**
-     * List all products
-     *
-     * This call return all products.
-     *
-     * @Route("products", name="get_all_products", methods={"GET"})
-     */
-    public function getAll(): JsonResponse
-    {
-        $products = $this->productRepository->findAll();
-        $data = [];
-
-        foreach ($products as $product) {
-            $data[] = [
-                'id' => $product->getId(),
-                'name' => $product->getName(),
-                'price' => $product->getPrice(),
-                'category' => is_null($product->getCategory()) ? null : $product->getCategory()->getName(),
-                'currency' => $product->getCurrency(),
-                'featured' => $product->getFeatured(),
-            ];
-        }
-
-        return new JsonResponse($data, Response::HTTP_OK);
-    }
-
-    /**
      * Update a category
      *
      * This call modify a product data.
@@ -132,7 +106,7 @@ class ProductController
 
         $updatedProduct = $this->productRepository->updateProduct($product);
 
-        return new JsonResponse(['status' => 'Product updated!'], Response::HTTP_OK);
+        return new JsonResponse(['status' => 'success', 'message' => 'Product updated!', 'id' => $updatedProduct->getId()], Response::HTTP_OK);
     }
 
     /**
@@ -146,7 +120,7 @@ class ProductController
 
         $this->productRepository->removeProduct($product);
 
-        return new JsonResponse(['status' => 'Product deleted'], Response::HTTP_OK);
+        return new JsonResponse(['status' => 'success', 'message' => 'Product deleted!'], Response::HTTP_OK);
     }
 
     /**
@@ -182,5 +156,32 @@ class ProductController
         }
 
         return new JsonResponse($returnValues, Response::HTTP_OK);
+    }
+
+
+    /**
+     * List all products
+     *
+     * This call return all products.
+     *
+     * @Route("products", name="get_all_products", methods={"GET"})
+     */
+    public function getAll(): JsonResponse
+    {
+        $products = $this->productRepository->findAll();
+        $data = [];
+
+        foreach ($products as $product) {
+            $data[] = [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
+                'category' => is_null($product->getCategory()) ? null : $product->getCategory()->getName(),
+                'currency' => $product->getCurrency(),
+                'featured' => $product->getFeatured(),
+            ];
+        }
+
+        return new JsonResponse($data, Response::HTTP_OK);
     }
 }

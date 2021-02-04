@@ -172,6 +172,9 @@
     "symfony/asset": {
         "version": "v4.4.19"
     },
+    "symfony/browser-kit": {
+        "version": "v4.4.19"
+    },
     "symfony/cache": {
         "version": "v4.4.19"
     },
@@ -194,6 +197,9 @@
             "config/bootstrap.php"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v4.4.19"
+    },
     "symfony/debug": {
         "version": "v4.4.19"
     },
@@ -204,6 +210,9 @@
         "version": "v2.2.0"
     },
     "symfony/doctrine-bridge": {
+        "version": "v4.4.19"
+    },
+    "symfony/dom-crawler": {
         "version": "v4.4.19"
     },
     "symfony/dotenv": {
@@ -286,6 +295,21 @@
     },
     "symfony/orm-pack": {
         "version": "v2.1.0"
+    },
+    "symfony/phpunit-bridge": {
+        "version": "5.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.1",
+            "ref": "bf16921ef8309a81d9f046e9b6369c46bcbd031f"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.22.0"
