@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
  * Class ConversorManager
  * @package App\Service
  *
- * Serice used to convert currency
+ * Service used to convert currency
  */
 class ConversorManager
 {
