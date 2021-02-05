@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Entity\Product;
 use App\Form\Type\CurrencyTypeEnum;
-use App\Repository\CountryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
