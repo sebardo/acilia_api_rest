@@ -21,8 +21,8 @@ abstract class BaseTest extends WebTestCase
         //get token
         $client->request('POST', '/token', [
             'grant_type' => 'client_credentials',
-            'client_id' => 'de2396e3ee0bc41c1c60fb1658be96ec',
-            'client_secret' => 'a576c347cb938debb1c11b28e08080ad06d71d433a68f62ec762e210355ec1efdb9118d95070780efc9e66b2b232e77b27d41127402cc7a1c9c71f4347a8e583',
+            'client_id' => getenv('CLIENT_ID'),
+            'client_secret' => getenv('CLIENT_SECRET'),
             'scope' => ''
         ]);
         return  json_decode($client->getResponse()->getContent(), true);

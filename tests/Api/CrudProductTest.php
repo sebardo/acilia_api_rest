@@ -123,7 +123,7 @@ class CrudProductTest extends BaseTest
         list($response, $client) = $this->call('GET','/api/product/featured', null, $client);
 
         //asserts
-        $this->assertGreaterThan(1, count($response));
+        $this->assertGreaterThan(0, count($response));
 
         //now check conversor result
         list($response, $client) = $this->call('GET','/api/product/featured?currency=EUR', null, $client);
