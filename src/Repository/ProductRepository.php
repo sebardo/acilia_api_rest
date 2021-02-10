@@ -29,21 +29,12 @@ class ProductRepository extends ServiceEntityRepository
      * @param $currency
      * @param $featured
      */
-    public function saveProduct($name, $price, $category, $currency, $featured)
+    public function saveProduct($product)
     {
-        $newProduct= new Product();
-
-        $newProduct
-            ->setName($name)
-            ->setPrice($price)
-            ->setCategory($category)
-            ->setCurrency($currency)
-            ->setFeatured($featured);
-
-        $this->manager->persist($newProduct);
+        $this->manager->persist($product);
         $this->manager->flush();
 
-        return $newProduct;
+        return $product;
     }
 
     /**

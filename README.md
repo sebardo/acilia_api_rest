@@ -21,14 +21,15 @@ The project is built with a several libraries as follow:
 - composer require nelmio/api-doc-bundle (api documentation)
 - composer require trikoder/oauth2-bundle nyholm/psr7 (oauth2 authentication/authorization)
 - composer require --dev symfony/phpunit-bridge (testing)
-- composer require --dev symfony/browser-kit symfony/css-selector
+- composer require --dev symfony/browser-kit symfony/css-selector 
+- composer require symfony/validator
 
 Running the project 
 ---------------------------------------
 
-This project requires `postgres` database with `postgres` user without password to running in the system. If you want other database engine just modify .env file
+This project requires `postgres` database with `postgres` user with `postgres` password to running in the system. If you want other database engine just modify .env file
 
-Clone the repository and access to folder created, run composer and create database, schema and start server 
+Clone the repository and access to folder created, run composer, create database, schema and start server 
 ```
 git clone https://github.com/sebardo/acilia_api_rest.git
 cd acilia_api_rest
@@ -53,20 +54,20 @@ Now can create OAuth client
 ```
 ./bin/console trikoder:oauth2:create-client
 ```
-And add CLIENT_ID and CLIENT_SECRET returned by command above on `phpunit.xml.dist` file
+Add CLIENT_ID and CLIENT_SECRET returned by command above on `phpunit.xml.dist` file
 
 ![PHPUNIT](https://i.ibb.co/544CBy6/phpunit.png)
 
 Enjoy it!
 ----------------------
-Now you can visit API REST documentation page and enjoy it! testing categort and product endpoints at
+Now you can visit API REST documentation page and testing category and product endpoints at
 https://127.0.0.1:8000/api/doc
 
 ![APIREST](https://i.ibb.co/m4jTKVG/docs.png)
 
 Testing
 ----------------------
-Can run testing to check all worl well
+Can run testing to check all work well
 
 ```
 ./bin/phpunit

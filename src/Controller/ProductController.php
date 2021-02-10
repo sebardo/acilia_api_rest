@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Service\ConversorManager;
+use App\Service\ValidatorManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,21 +46,13 @@ class ProductController
      *     )
      * )
      */
-    public function add(Request $request): JsonResponse
+    public function add(Request $request, ValidatorManager $validatorManager): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        //validation
+        $validEntity = $validatorManager->validate($request, new Product(), ['create']);
+        if($validEntity instanceof JsonResponse) return $validEntity;
 
-        $name = $data['name'];
-        $price = $data['price'];
-        $cateogry = isset($data['category']) ? $this->categoryRepository->find($data['category']) : null;
-        $currency = isset($data['currency']) ? $data['currency'] : null;
-        $featured = isset($data['featured']) ? $data['featured'] : false;
-
-        if (empty($name) || empty($price)) {
-            throw new NotFoundHttpException('Expecting mandatory parameters!');
-        }
-
-        $product = $this->productRepository->saveProduct($name, $price, $cateogry, $currency, $featured);
+        $product = $this->productRepository->saveProduct($validEntity);
 
         return new JsonResponse(['status' => 'success', 'message' => 'Product created!', 'id' => $product->getId()], Response::HTTP_CREATED);
     }
@@ -93,18 +87,15 @@ class ProductController
      *
      * @Route("product/{id}", name="update_product", methods={"PUT"})
      */
-    public function update($id, Request $request): JsonResponse
+    public function update($id, Request $request, ValidatorManager $validatorManager): JsonResponse
     {
         $product = $this->productRepository->findOneBy(['id' => $id]);
-        $data = json_decode($request->getContent(), true);
 
-        empty($data['name']) ? true : $product->setName($data['name']);
-        empty($data['price']) ? true : $product->setPrice($data['price']);
-        empty($data['category']) ? true : $product->setCategory($this->categoryRepository->find($data['category']));
-        empty($data['currency']) ? true : $product->setCurrency($data['currency']);
-        empty($data['featured']) ? true : $product->setFeatured($data['featured']);
+        //validation
+        $validEntity = $validatorManager->validate($request, $product);
+        if($validEntity instanceof JsonResponse) return $validEntity;
 
-        $updatedProduct = $this->productRepository->updateProduct($product);
+        $updatedProduct = $this->productRepository->updateProduct($validEntity);
 
         return new JsonResponse(['status' => 'success', 'message' => 'Product updated!', 'id' => $updatedProduct->getId()], Response::HTTP_OK);
     }

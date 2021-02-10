@@ -13,8 +13,8 @@
         <server name="SHELL_VERBOSITY" value="-1" />
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="8.5" />
-        <env name="CLIENT_ID" value="de2396e3ee0bc41c1c60fb1658be96ec" force="true" />
-        <env name="CLIENT_SECRET" value="a576c347cb938debb1c11b28e08080ad06d71d433a68f62ec762e210355ec1efdb9118d95070780efc9e66b2b232e77b27d41127402cc7a1c9c71f4347a8e583" force="true" />
+        <env name="CLIENT_ID" value="c187becd93c97bbada5ef1ac065dc441" force="true" />
+        <env name="CLIENT_SECRET" value="0331a934e6ea650c91351f7bf7db5ff813282d07fa772c0a78a22ebfff64e11d594a714cc7b61d42eae6e26c0c06ad00128bea7849720e683b62359af7edeafa" force="true" />
     </php>
 
     <testsuites>

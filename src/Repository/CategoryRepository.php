@@ -25,18 +25,12 @@ class CategoryRepository extends ServiceEntityRepository
      * @param $name
      * @param $description
      */
-    public function saveCategory($name, $description)
+    public function saveCategory($category)
     {
-        $newCategory = new Category();
-
-        $newCategory
-            ->setName($name)
-            ->setDescription($description);
-
-        $this->manager->persist($newCategory);
+        $this->manager->persist($category);
         $this->manager->flush();
 
-        return $newCategory;
+        return $category;
     }
 
     /**

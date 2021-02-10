@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Service\ValidatorManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,18 +41,14 @@ class CategoryController
      *     )
      * )
      */
-    public function add(Request $request): JsonResponse
+    public function add(Request $request, ValidatorManager $validatorManager): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        //validation
+        $validEntity = $validatorManager->validate($request, new Category(), ['create']);
+        if($validEntity instanceof JsonResponse) return $validEntity;
 
-        $name = $data['name'];
-        $description = (isset($data['description'])) ? $data['description'] : null;
-
-        if (empty($name)) {
-            throw new NotFoundHttpException('Expecting mandatory parameters!');
-        }
-
-        $category = $this->categoryRepository->saveCategory($name, $description);
+        //save entity
+        $category = $this->categoryRepository->saveCategory($validEntity);
 
         return new JsonResponse(['status' => 'success', 'message' => 'Category created!', 'id' => $category->getId()], Response::HTTP_CREATED);
     }
@@ -90,15 +88,15 @@ class CategoryController
      *     )
      * )
      */
-    public function update($id, Request $request): JsonResponse
+    public function update($id, Request $request, ValidatorManager $validatorManager): JsonResponse
     {
         $category = $this->categoryRepository->findOneBy(['id' => $id]);
-        $data = json_decode($request->getContent(), true);
 
-        empty($data['name']) ? true : $category->setName($data['name']);
-        empty($data['description']) ? true : $category->setDescription($data['description']);
+        //validation
+        $validEntity = $validatorManager->validate($request, $category);
+        if($validEntity instanceof JsonResponse) return $validEntity;
 
-        $updatedCategory = $this->categoryRepository->updateCategory($category);
+        $updatedCategory = $this->categoryRepository->updateCategory($validEntity);
 
         return new JsonResponse(['status' => 'success', 'message' => 'Category updated!', 'id' => $updatedCategory->getId()], Response::HTTP_OK);
     }
